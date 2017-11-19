@@ -19,7 +19,7 @@ ToDo:
 TBD
 
 ## Further informations
-TBD
+* [Development](documentations/DEVELOPMENT.md)
 
 ## Licence
 See [License](LICENSE.md) for our code.
