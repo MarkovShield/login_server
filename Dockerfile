@@ -15,7 +15,8 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app/config
 RUN node genca.js 
 RUN node genserver.js
-RUN chmod 400 -R /usr/src/app/config
+RUN chmod 700 /usr/src/app/config
+RUN chmod 600 /usr/src/app/config/*
 RUN chown markov:markov -R /usr/src/app/config
 WORKDIR /usr/src/app
 
