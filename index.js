@@ -12,12 +12,25 @@ const path = require('path');
 const routes = require('./routes/index');
 const secrets = require('./services/markov-secrets');
 const pug = require('pug');
+const passport = require('passport');
+const ldapStrategy = require('passport-ldapauth');
+
 
 const allowCrossDomain = function (request, response, next) {
   response.header('Access-Control-Allow-Origin', '*');
   response.header('Access-Control-Allow-Methods', 'GET,POST');
   response.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
+};
+
+var LDAP_OPTS = {
+  server: {
+    url: 'ldap://localhost:389',
+    bindDN: 'cn=svc_markov,dc=markovshield,dc=com',
+    bindCredentials: 'mypassword',
+    searchBase: 'dc=markovshield,dc=com',
+    searchFilter: '(uid={{username}})',
+  }
 };
 
 /**
@@ -31,6 +44,8 @@ app.use('/', routes);
 app.use(favicon(__dirname + '/public/img/icon.png'));
 app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, 'public')));
+passport.use(new ldapStrategy(LDAP_OPTS));
+app.use(passport.initialize());
 
 /**
  * Server start
