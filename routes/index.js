@@ -7,6 +7,12 @@ router.get('/', function (req, res, next) {
   res.render('login')
 });
 
-router.post('/login', passport.authenticate('ldapauth', {session: false}), controller.setLoginCookie);
+router.post('/login', passport.authenticate('ldapauth', {session: false, failureRedirect: '/'}), function(req, res) {
+  controller.setLoginCookie;
+  res.send({
+    "code":200,
+    "success": "login sucessfull"
+  });
+});
 
 module.exports = router;
